@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Old-school AJAX</title>
+  <style>
+    * {
+      font-family: sans-serif;
+    }
+    pre {
+      white-space: pre-wrap;
+    }
+    li {
+      margin-top: 1em;
+    }
+  </style>
+  <!--
+    Get your hands dirty
+    ====================
+
+    Read the code.
+    - Identify the relationships between things, based on what you know about syntax (what is meant by dot notation, parentheses, etc).
+    - Which parts are objects? Which parts are functions?
+    - Identify function definitions vs function calls. 
+    - In what order do you expect the lines of code will run?
+
+    Experiment with the code.
+    - Start by making a new branch
+    - Examine unfamiliar things using console.log
+    - Predict what will happen when you change parts of the code, and try it
+  
+    Bonus: What happens in the Network tab of your Dev Tools when you click the button? (refresh before you click to see a change)
+  -->
+</head>
+<body>
+  <main>
+    <h1>Old-school AJAX</h1>
+    <ol>
+      <li>Read <strong>README.md</strong>.</li>
+      <li>Read the source code in <strong>index.html</strong>.
+      <li>Try making sense of the code and experimenting on your own.</li>
+      <li>When you get curious about a specific object or method, <a href="https://developer.mozilla.org/en-US/docs/Glossary/XHR_(XMLHttpRequest)">MDN is your friend</a>. MDN also has some nice guides to understanding the topic, as usual :)</li>
+    </ol>
+
+    <button type="button" onclick="loadDoc()">Clicketty</button>
+    <pre id="demo"></pre>
+  </main>
+
+  <script>
+    function loadDoc() {
+      var xhr = new XMLHttpRequest();
+      console.log('A. Create XHR object ');
+      console.log('readyState starts at ', xhr.readyState);
+
+      console.log('B. Open the request');
+      xhr.open('GET', 'under-the-hood.md', true);
+
+      console.log('C. Define a func to run when we get a response');
+      // this will only run after we call xhr.send()
+      xhr.onreadystatechange = function () {
+        console.log('change readyState to ', xhr.readyState);
+        if (this.readyState === 4 && this.status === 200) {
+          console.log('DONE + OK!');
+          document.getElementById('demo').textContent =
+            this.responseText;
+        }
+        console.log("By the way... ", this === xhr);
+      };
+
+      console.log('D. Send the request');
+      xhr.send();
+    }
+  </script>
+</body>
+</html>
